@@ -1,6 +1,3 @@
-#Set the working directory
-setwd("~/Documents/Coursera/GettingAndCleaningData/Getting-Cleaning-Data-Coursera/UCI HAR Dataset")
-
 #Download the training and test datasets from Samsun Galaxy S smartphone accelerometers. 
 download.file(url="https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip", destfile="accelerometer.zip")
 
@@ -8,12 +5,12 @@ download.file(url="https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%
 unzip("accelerometer.zip")
 
 #Read in the training and test datasets, their activity labels, and their subject labels
-train <- read.table("train/X_train.txt")
-train.activities <- read.table("train/y_train.txt")
-train.subjects <- read.table("train/subject_train.txt")
-test <- read.table("test/X_test.txt")
-test.activities <- read.table("test/y_test.txt")
-test.subjects <- read.table("test/subject_test.txt")
+train <- read.table("X_train.txt")
+train.activities <- read.table("y_train.txt")
+train.subjects <- read.table("subject_train.txt")
+test <- read.table("X_test.txt")
+test.activities <- read.table("y_test.txt")
+test.subjects <- read.table("subject_test.txt")
 
 #Read in the features and add in feature labels "activity_type" and "subject" that will be used as column headers for the activities and subject variables, respectively
 features <- read.table("features.txt")
@@ -58,8 +55,8 @@ mean.std.columns <- subset(combined, select=mean.std.colnames)
 write.csv(mean.std.columns, file="mean.std.csv")
 
 #Create a second tidy dataset with the average (mean) of each variable for each activity and each subject. 
-mean.colnames <- grep("subject|activity_name|[Mm]ean", colnames(mean.std.columns), value=TRUE)
+mean.colnames <- grep("subject|activity_type|[Mm]ean", colnames(mean.std.columns), value=TRUE)
 mean.columns <- subset(mean.std.columns, select=mean.colnames)
 
 #write to csv file
-write.csv(mean.columns, file="mean.csv")
+write.table(mean.columns, file="mean.txt", row.names = FALSE)
